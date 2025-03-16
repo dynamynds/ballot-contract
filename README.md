@@ -20,7 +20,7 @@ PRIVATE_KEY=your_metamask_private_key_without_0x
 
 ## Contract Details
 - Network: Sepolia Testnet
-- Contract Address: [Your deployed contract address]
+- Contract Address: 0xc633F75e7fCB481a881d4e9F0B16F2677C652B99
 - Chairperson Address: 0xe6eb68Cc142a0628A54fE707a0F67110aaDB0540
 
 ## Available Scripts
