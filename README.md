@@ -20,8 +20,8 @@ PRIVATE_KEY=your_metamask_private_key_without_0x
 
 ## Contract Details
 - Network: Sepolia Testnet
-- Contract Address: [INSERT_DEPLOYED_CONTRACT_ADDRESS]
-- Chairperson Address: [INSERT_YOUR_METAMASK_ADDRESS]
+- Contract Address: [Your deployed contract address]
+- Chairperson Address: 0xe6eb68Cc142a0628A54fE707a0F67110aaDB0540
 
 ## Available Scripts
 
@@ -54,6 +54,11 @@ You can get test ETH from:
 - https://sepoliafaucet.com/
 - https://sepolia-faucet.pk910.de/
 
+## Current Proposals
+1. Chocolate (index 0)
+2. Vanilla (index 1)
+3. Strawberry (index 2)
+
 ## Viewing on Etherscan
 View contract and transactions at:
-https://sepolia.etherscan.io/address/[INSERT_CONTRACT_ADDRESS]
+https://sepolia.etherscan.io/address/[Your deployed contract address]

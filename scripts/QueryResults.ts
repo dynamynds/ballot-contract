@@ -1,4 +1,4 @@
-import { createPublicClient, http } from "viem";
+import { createPublicClient, http, hexToString } from "viem";
 import { sepolia } from "viem/chains";
 import { abi } from "../artifacts/contracts/Ballot.sol/Ballot.json";
 import * as dotenv from "dotenv";
@@ -35,34 +35,38 @@ async function main() {
     abi,
     functionName: "winningProposal",
   });
-  console.log("Winning proposal index:", winningProposal);
+  console.log("\nWinning proposal index:", winningProposal);
 
   // Get the winning proposal name
-  const winningProposalName = await publicClient.readContract({
+  const winnerName = await publicClient.readContract({
     address: contractAddress,
     abi,
     functionName: "winnerName",
-  });
-  console.log("Winning proposal name:", winningProposalName);
+  }) as `0x${string}`;
+  console.log("Winning proposal name:", hexToString(winnerName, { size: 32 }));
 
-  // Get all proposals
-  const proposalCount = await publicClient.readContract({
-    address: contractAddress,
-    abi,
-    functionName: "proposalCount",
-  });
-  console.log("\nAll proposals:");
-  for (let i = 0; i < Number(proposalCount); i++) {
-    const proposal = await publicClient.readContract({
-      address: contractAddress,
-      abi,
-      functionName: "proposals",
-      args: [BigInt(i)],
-    }) as any[];
-    console.log(`Proposal ${i}:`, {
-      name: proposal[0],
-      voteCount: proposal[1],
-    });
+  // Try to get proposals (will try first few indices)
+  console.log("\nProposals:");
+  try {
+    for (let i = 0; i < 10; i++) {
+      try {
+        const proposal = await publicClient.readContract({
+          address: contractAddress,
+          abi,
+          functionName: "proposals",
+          args: [BigInt(i)],
+        }) as any[];
+        console.log(`Proposal ${i}:`, {
+          name: hexToString(proposal[0] as `0x${string}`, { size: 32 }),
+          voteCount: proposal[1],
+        });
+      } catch (e) {
+        // Stop when we can't find more proposals
+        break;
+      }
+    }
+  } catch (e) {
+    console.log("Could not fetch all proposals");
   }
 }
 
